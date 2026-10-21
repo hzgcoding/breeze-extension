@@ -1,0 +1,587 @@
+{
+  "brand": {
+    "name": "Breeze"
+  },
+  "diagnostics": {
+    "title": "配置诊断",
+    "registrationNotice": "注册状态来自后台最近一次更新，不代表实际观测到网络请求。保存修改后可能需要稍候。",
+    "urlLabel": "检查请求 URL 或域名",
+    "urlPlaceholder": "https://api.example.com/request",
+    "localNotice": "仅在本地检查域名，不发送请求。域名通过检查不代表配置已实际生效。",
+    "status": {
+      "globalOff": "全局开关已关闭",
+      "paused": "配置已暂停",
+      "invalidOperations": "请求头操作无效",
+      "noActiveOperations": "没有有效的已启用操作",
+      "registrationError": "注册失败",
+      "pending": "等待注册",
+      "registered": "已注册"
+    },
+    "result": {
+      "invalidUrl": "请输入有效的请求 URL 或域名。",
+      "noActiveOperations": "没有可注册的已启用且非空的操作。",
+      "excludedDomain": "请求域名被排除：此 URL 不符合当前域名条件。",
+      "outsideDomains": "请求域名不在包含列表中：此 URL 不符合当前域名条件。",
+      "domainMatch": "请求域名通过本地检查。测试请求前请检查注册状态。",
+      "unknown": "无法确定：本地域名检查无法判断此请求是否匹配。"
+    },
+    "limits": {
+      "urlPattern": "本地不计算 DNR URL 匹配模式。",
+      "regex": "本地不计算 DNR 正则表达式。",
+      "initiator": "请求发起方未知，可能与请求 URL 不同。",
+      "topFrame": "关联的顶层页面未知。",
+      "party": "无法确定第一方或第三方关系。",
+      "resource": "请求资源类型未知。",
+      "method": "HTTP 请求方法未知。",
+      "tab": "标签页和标签组条件需要实时浏览器上下文。",
+      "domainSyntax": "本地仅支持纯 ASCII 域名。国际化规则域名请使用 punycode；不会自动改写通配符或 URL。",
+      "urlScheme": "本地检查不支持此 URL 协议。",
+      "invalidOperations": "测试此配置前请修正已启用的无效请求头名称或值。"
+    },
+    "conflictsTitle": "潜在的请求头冲突",
+    "conflictsNotice": "已启用的设置或移除操作可能在本配置内冲突，也可能与条件潜在重叠的其他配置冲突。其他条件和 DNR 优先级会影响结果。",
+    "requestConflict": "{name}：请求头 {header}",
+    "responseConflict": "{name}：响应头 {header}"
+  },
+  "environments": {
+    "title": "环境切换",
+    "defaultName": "环境",
+    "select": "切换 {name} 中的环境",
+    "off": "已暂停",
+    "hint": "将 Profile 组成互斥环境，一次切换整套配置。",
+    "create": "创建环境组",
+    "description": "选择要组成互斥环境的 Profile。移动 Profile 会移除它原有的分组关系。",
+    "name": "分组名称",
+    "selectionHint": "至少选择两个 Profile。仅保留一个当前已启用的成员，其余成员将暂停。"
+  },
+  "addRuleOptionDialog": {
+    "disabledTooltip": {
+      "modifyHeadersRuleActionType": "将规则操作类型切换为“修改请求/响应头”后即可添加此操作。",
+      "regexFilterBlockedByUrlFilter": "请先删除已有的 URL 过滤器。URL 过滤器和正则过滤器只能使用其中一个。",
+      "redirectRuleActionType": "将规则操作类型切换为“重定向”后即可添加此操作。",
+      "redirectUrlExists": "请先删除已有的重定向 URL，再添加新的重定向 URL。",
+      "conditionAlreadyAdded": "此类型规则已被添加，不能重复添加。",
+      "urlFilterBlockedByRegexFilter": "请先删除已有的正则过滤器。URL 过滤器和正则过滤器只能使用其中一个。"
+    },
+    "items": {
+      "cookieSyncRequestHeader": {
+        "description": "将指定网站的 Cookie 同步到请求头。",
+        "title": "同步 Cookie 到请求头"
+      },
+      "domainType": {
+        "description": "指定网络请求相对于其发起域名是一方请求还是三方请求。",
+        "title": "域名类型"
+      },
+      "excludedInitiatorDomains": {
+        "description": "当请求发起域名匹配 excluded initiator domains 列表时，规则不会匹配该请求。列表为空或省略时不会排除任何域名。它优先于 initiator domains。",
+        "title": "排除发起域名"
+      },
+      "excludedTopDomains": {
+        "description": "当关联的顶层框架域名匹配 excluded top domains 列表时，规则不会匹配该请求。省略时不排除任何顶层框架域名。",
+        "title": "排除顶层域名"
+      },
+      "excludedRequestDomains": {
+        "description": "当请求域名匹配 excludedRequestDomains 列表时，规则不会匹配该请求。列表为空或省略时不会排除任何域名。它优先于 requestDomains。",
+        "title": "排除请求域名"
+      },
+      "excludedRequestMethods": {
+        "description": "规则不会匹配的请求方法列表。requestMethods 和 excludedRequestMethods 只能指定其中一个。如果两者都未指定，则匹配所有请求方法。",
+        "title": "排除请求方法"
+      },
+      "excludedResourceTypes": {
+        "description": "规则不会匹配的资源类型列表。resourceTypes 和 excludedResourceTypes 只能指定其中一个。如果两者都未指定，则会阻止除 main_frame 外的所有资源类型。",
+        "title": "排除资源类型"
+      },
+      "excludedTabIds": {
+        "description": "规则不会匹配来自所选标签页的请求。标签页绑定在浏览器重启后失效。",
+        "title": "排除标签页"
+      },
+      "excludedTabGroups": {
+        "description": "规则不会匹配来自所选标签组内标签页的请求。需要授予标签组访问权限。",
+        "title": "排除标签组"
+      },
+      "initiatorDomains": {
+        "description": "规则仅匹配来自 initiator domains 列表中域名的网络请求。省略列表时，规则应用于来自所有域名的请求。不允许空列表。",
+        "title": "发起域名"
+      },
+      "modifyRequestHeader": {
+        "description": "设置、移除或追加 HTTP 请求头。",
+        "title": "修改 HTTP 请求头"
+      },
+      "modifyResponseHeader": {
+        "description": "设置、移除或追加 HTTP 响应头。",
+        "title": "修改 HTTP 响应头"
+      },
+      "regexFilter": {
+        "description": "规则仅匹配 URL 包含任一指定子串的网络请求。省略列表时，规则应用于所有 URL 的请求。不允许空列表。urlFilter 和 regexFilter 只能指定其中一个。",
+        "title": "正则过滤器"
+      },
+      "requestDomains": {
+        "description": "当请求域名匹配 requestDomains 列表中的某一项时，规则才会匹配网络请求。省略列表时，规则应用于来自所有域名的请求。不允许空列表。",
+        "title": "请求域名"
+      },
+      "topDomains": {
+        "description": "当关联的顶层框架域名匹配 top domains 列表中的某一项时，规则才会匹配该请求。省略时接受所有顶层框架域名。",
+        "title": "顶层域名"
+      },
+      "requestMethods": {
+        "description": "规则可以匹配的 HTTP 请求方法列表。不允许空列表。注意：指定 requestMethods 也会排除非 HTTP(S) 请求。",
+        "title": "请求方法"
+      },
+      "resourceTypes": {
+        "description": "规则可以匹配的资源类型列表。不允许空列表。",
+        "title": "资源类型"
+      },
+      "simpleRedirectUrl": {
+        "description": "将匹配的请求重定向到指定 URL。",
+        "title": "简单重定向 URL"
+      },
+      "tabIds": {
+        "description": "规则仅匹配来自所选标签页的请求。标签页绑定在浏览器重启后失效。",
+        "title": "标签页"
+      },
+      "tabGroups": {
+        "description": "规则仅匹配来自所选标签组内标签页的请求。需要授予标签组访问权限。",
+        "title": "标签组"
+      },
+      "urlFilter": {
+        "description": "规则仅匹配 URL 包含任一指定子串的网络请求。省略列表时，规则应用于所有 URL 的请求。不允许空列表。urlFilter 和 regexFilter 只能指定其中一个。",
+        "title": "URL 过滤器"
+      },
+      "urlRegexFilterCaseSensitive": {
+        "description": "指定 URL 过滤器是否区分大小写。",
+        "title": "URL 与正则过滤器区分大小写"
+      }
+    },
+    "tabs": {
+      "actions": "操作",
+      "conditions": "条件"
+    }
+  },
+  "commentsDialog": {
+    "description": "为这个配置字段添加或编辑备注。",
+    "placeholder": "在这里添加备注...",
+    "title": "编辑备注"
+  },
+  "common": {
+    "additionalPermission": "需要额外权限",
+    "addCondition": "添加条件",
+    "auto": "自动",
+    "backToProfiles": "返回配置",
+    "beautify": "格式化",
+    "cancel": "取消",
+    "checkbox": "复选",
+    "clearAll": "清除全部",
+    "close": "关闭",
+    "comments": "备注",
+    "confirm": "确认",
+    "copy": "复制",
+    "dark": "深色",
+    "deleteCondition": "删除此条件",
+    "deleteDomain": "删除此域名",
+    "deleteHeaderMod": "删除此请求头修改项",
+    "domain": "域名",
+    "duplicate": "复制",
+    "github": "GitHub",
+    "import": "导入",
+    "light": "浅色",
+    "loading": "加载中",
+    "moreOptions": "更多选项",
+    "name": "名称",
+    "noComments": "无备注",
+    "noResultsFound": "未找到结果。",
+    "notAvailable": "不可用",
+    "off": "关",
+    "on": "开",
+    "recommended": "推荐",
+    "radio": "单选",
+    "redo": "重做",
+    "reportIssue": "反馈问题",
+    "reset": "重置",
+    "save": "保存",
+    "search": "搜索",
+    "selectOptions": "选择选项",
+    "settings": "设置",
+    "share": "分享",
+    "undo": "撤销",
+    "value": "值"
+  },
+  "condition": {
+    "domains": {
+      "excludedInitiatorDomains": {
+        "title": "排除发起域名过滤器"
+      },
+      "excludedRequestDomains": {
+        "title": "排除请求域名过滤器"
+      },
+      "excludedTopDomains": {
+        "title": "排除顶层域名过滤器"
+      },
+      "initiatorDomains": {
+        "title": "发起域名过滤器"
+      },
+      "requestDomains": {
+        "title": "请求域名过滤器"
+      },
+      "topDomains": {
+        "title": "顶层域名过滤器"
+      },
+      "useCurrentTabDomain": "使用当前标签页的域名"
+    },
+    "domainType": {
+      "firstParty": "一方",
+      "thirdParty": "三方",
+      "title": "域名类型"
+    },
+    "excludedRequestMethods": {
+      "title": "排除请求方法"
+    },
+    "excludedResourceTypes": {
+      "title": "排除资源类型"
+    },
+    "excludedTabIds": {
+      "title": "排除标签页"
+    },
+    "excludedTabGroups": {
+      "title": "排除标签组"
+    },
+    "regexFilter": {
+      "title": "正则过滤器"
+    },
+    "requestMethods": {
+      "title": "请求方法"
+    },
+    "resourceType": {
+      "cspReport": "CSP 报告",
+      "font": "字体",
+      "image": "图片",
+      "mainFrame": "主框架",
+      "media": "媒体",
+      "object": "对象",
+      "other": "其他",
+      "ping": "Ping",
+      "script": "脚本",
+      "stylesheet": "样式表",
+      "subFrame": "子框架",
+      "webbundle": "WebBundle",
+      "websocket": "WebSocket",
+      "webtransport": "WebTransport",
+      "xmlhttprequest": "XMLHttpRequest"
+    },
+    "resourceTypes": {
+      "title": "资源类型"
+    },
+    "selectPlaceholder": "选择{name}...",
+    "tabIds": {
+      "quickSelect": "快速替换所选标签页",
+      "selectPlaceholder": "选择标签页...",
+      "title": "标签页",
+      "unavailableTab": "标签页不可用，可能已被关闭或浏览器已重启",
+      "untitledTab": "未命名标签页",
+      "useCurrentGroup": "使用当前分组",
+      "useCurrentTab": "使用当前标签页",
+      "useCurrentWindow": "使用当前窗口"
+    },
+    "tabGroups": {
+      "addCurrentTabGroup": "添加当前标签组",
+      "unnamedGroupLabel": "\"{tabTitle}\" | \"{tabTitle} 和其他 {remainingCount} 个标签页\" | \"{tabTitle} 和其他 {remainingCount} 个标签页\"",
+      "selectPlaceholder": "选择标签组...",
+      "title": "标签组",
+      "unavailableGroup": "标签组不可用"
+    },
+    "urlFilter": {
+      "title": "URL 过滤器",
+      "useCurrentTabRootUrl": "使用当前标签页的根 URL"
+    },
+    "urlFilterCaseSensitive": {
+      "title": "URL 过滤器区分大小写"
+    }
+  },
+  "emoji": {
+    "remove": "删除表情符号",
+    "categories": {
+      "activities": "活动",
+      "animalsNature": "动物与自然",
+      "flags": "旗帜",
+      "foodDrink": "食物与饮品",
+      "objects": "物品",
+      "smileysPeople": "笑脸与人物",
+      "symbols": "符号",
+      "travelPlaces": "旅行与地点"
+    }
+  },
+  "share": {
+    "copyLink": "复制分享链接",
+    "copyToClipboard": "复制到剪贴板",
+    "saveAsFile": "保存为文件",
+    "selectAll": "全选",
+    "title": "分享配置",
+    "toast": {
+      "jsonCopied": "配置 JSON 已复制到剪贴板",
+      "linkCopied": "分享链接已复制到剪贴板"
+    },
+    "unselectAll": "取消全选"
+  },
+  "group": {
+    "actions": {
+      "addItem": "添加新项目",
+      "deleteGroup": "删除此分组",
+      "openDocumentation": "打开文档",
+      "transferGroupTypeTo": "转换分组类型为"
+    },
+    "collapse": "折叠分组",
+    "expand": "展开分组"
+  },
+  "headerInput": {
+    "description": "每行粘贴一个“Header: value”。所有有效行将以“设置”操作一起添加；插入前请修正所有错误。",
+    "emptyValueWarning": "值为空：不会生成标头操作。",
+    "headersLabel": "HTTP 标头",
+    "insert": "插入 {count} 个标头",
+    "invalidName": "请使用 HTTP token 名称，不得包含空格、冒号或换行。",
+    "invalidValue": "标头值不能包含换行。如需添加多行，请使用“粘贴标头”。",
+    "lineInvalidName": "第 {line} 行：标头名称无效。",
+    "lineInvalidValue": "第 {line} 行：标头值包含换行。",
+    "lineMissingColon": "第 {line} 行：应为 Header: value 格式。",
+    "pasteHeaders": "粘贴标头",
+    "placeholder": "Authorization: Bearer token\nX-Environment: development",
+    "preview": "预览（{count} 个标头）",
+    "radioDescription": "此分组为单选。新标头将以禁用状态添加，插入后请选择其中一项。",
+    "savedHeaderKept": "此次编辑尚未保存。上次保存的有效标头在启用时将继续生效。"
+  },
+  "headerMod": {
+    "currentOperation": "当前操作：{operation}",
+    "operation": {
+      "append": "追加",
+      "remove": "移除",
+      "set": "设置"
+    },
+    "recent": {
+      "add": "添加 Header：{name}",
+      "remove": "从最近记录中删除 {name}",
+      "title": "最近："
+    },
+    "requestHeaders": "请求头",
+    "responseHeaders": "响应头",
+    "switchTo": "切换到 {operation}"
+  },
+  "import": {
+    "confirm": "确认导入",
+    "loadFromFile": "从文件加载",
+    "profile": "个配置",
+    "profiles": "个配置",
+    "title": "使用 JSON 导入配置",
+    "toast": {
+      "cookiesPermissionRequired": "导入已取消：Cookie 同步配置需要 Cookie 权限",
+      "fileLoaded": "文件加载成功",
+      "fileReadFailed": "读取文件失败",
+      "invalidJson": "导入失败：JSON 格式无效",
+      "invalidShareLink": "导入失败：分享链接无效",
+      "invalidShareLinkDescription": "请检查分享链接是否完整，且不包含多余字符。",
+      "success": "成功导入 {count} {label}！"
+    }
+  },
+  "jsonEditor": {
+    "search": {
+      "closeSearch": "关闭搜索",
+      "findPlaceholder": "查找",
+      "matchCase": "区分大小写",
+      "matchWholeWord": "全词匹配",
+      "nextMatch": "下一个匹配",
+      "previousMatch": "上一个匹配",
+      "replace": "替换",
+      "replaceAll": "全部替换",
+      "replacePlaceholder": "替换",
+      "toggleReplace": "切换替换",
+      "useRegularExpression": "使用正则表达式"
+    }
+  },
+  "profile": {
+    "actions": {
+      "addToGroup": "将配置加入分组",
+      "createNewGroup": "创建新分组",
+      "delete": "删除",
+      "openSecondaryOperations": "打开更多操作下拉菜单",
+      "pause": "暂停",
+      "removeFromGroup": "移出分组",
+      "resume": "恢复",
+      "ruleActionType": "规则操作类型",
+      "share": "分享",
+      "unnamedGroupLabel": "\"{profileName}\" | \"{profileName} 和其他 {remainingCount} 个配置\" | \"{profileName} 和其他 {remainingCount} 个配置\""
+    },
+    "alert": {
+      "globalRuleDescription": "添加一个条件以避免问题。",
+      "globalRuleTitle": "此配置会影响所有请求，可能导致网站异常。",
+      "implicitActionDescription": "即使未添加其他操作配置，它也可能已经生效。",
+      "implicitActionTitle": "此配置已添加操作。",
+      "ignoreWarning": "忽略警告",
+      "registrationErrorTitle": "此配置注册规则时发生错误。"
+    },
+    "changeType": {
+      "description": "为此配置选择新的操作类型。切换类型可能会移除现有操作。",
+      "placeholder": "选择类型",
+      "title": "更改规则操作类型"
+    },
+    "empty": "暂无数据，请先添加操作或条件。",
+    "header": {
+      "addActionOrCondition": "添加操作或条件",
+      "addActionOrConditionTooltip": "添加新的操作或条件",
+      "priority": "优先级",
+      "priorityLabel": "优先级：",
+      "priorityValue": "优先级：{priority}",
+      "ruleActionType": "规则操作类型：{type}"
+    },
+    "priority": {
+      "description": "优先级定义规则的冲突解决策略。当多个规则匹配同一请求时，系统会优先执行权重更高的规则。",
+      "title": "编辑规则优先级"
+    },
+    "search": {
+      "batchManage": "批量管理",
+      "deleteSelectedProfiles": "删除所有已选择的配置",
+      "pauseSelectedProfiles": "暂停所有已选择的配置",
+      "placeholder": "搜索配置...",
+      "resumeSelectedProfiles": "恢复所有已选择的配置",
+      "title": "搜索配置"
+    },
+    "sidebar": {
+      "changelog": "更新日志",
+      "defaultActionType": "默认操作类型",
+      "documentation": "文档",
+      "makeDefault": "设为默认",
+      "newProfile": "新建配置",
+      "openInTab": "在标签页中打开",
+      "openMenu": "打开侧边栏菜单",
+      "profiles": "配置",
+      "quickCreate": "快速创建",
+      "quickCreateDescription": "默认规则操作类型可在“新建配置”的子菜单中更改",
+      "resources": "资源",
+      "turnOff": "关闭扩展",
+      "turnOn": "开启扩展"
+    }
+  },
+  "profileGroup": {
+    "actions": {
+      "delete": "删除分组",
+      "newProfile": "在分组中新建配置",
+      "pauseAndRemember": "暂停并记忆",
+      "pauseAndRememberDescription": "暂停分组并记住当前启用的配置；恢复分组时只会启用这些配置。在其他位置更改配置状态会清除该记忆。",
+      "resume": "恢复分组",
+      "resumeRemembered": "恢复记忆项",
+      "resumeRememberedDescription": "恢复暂停时记住的配置。复选分组会恢复全部记忆项，单选分组只恢复第一项。在其他位置更改配置状态会清除该记忆。",
+      "ungroup": "取消分组"
+    },
+    "namePlaceholder": "命名此分组"
+  },
+  "redirectUrl": {
+    "delete": "删除此重定向 URL",
+    "title": "重定向 URL",
+    "useCurrentTabUrl": "使用当前标签页的 URL"
+  },
+  "ruleAction": {
+    "allow": "允许",
+    "allowAllRequests": "允许所有请求",
+    "block": "阻止",
+    "modifyHeaders": "修改请求头",
+    "redirect": "重定向",
+    "upgradeScheme": "升级协议"
+  },
+  "settings": {
+    "descriptions": {
+      "hideRecentlyAdded": "隐藏最近添加的请求头和响应头名称快捷入口。",
+      "showCommentsInline": "将每个字段的备注显示在其他操作旁，而不是放在“更多选项”菜单中。"
+    },
+    "fieldLabel": "{label}：",
+    "fields": {
+      "hideRecentlyAdded": "隐藏最近添加的标头",
+      "language": "语言",
+      "showCommentsInline": "在字段外侧显示备注",
+      "theme": "主题"
+    },
+    "groups": {
+      "appearance": "外观",
+      "profiles": "配置",
+      "troubleshooting": "故障排查"
+    },
+    "reset": {
+      "cannotUndo": "此操作无法撤销。",
+      "description": "确定要将所有设置重置为默认值吗？",
+      "title": "重置扩展设置",
+      "tooltip": "重置扩展设置"
+    },
+    "theme": {
+      "auto": "自动",
+      "dark": "深色",
+      "light": "浅色"
+    },
+    "troubleshooting": {
+      "reinitializeAll": "重新初始化所有配置",
+      "reinitializeDescription": "如果你发现定义的活动配置数量与扩展弹出角标显示的数量不一致，请点击下面的按钮。",
+      "reinitializeError": "重新初始化配置失败。请向我们反馈此问题。",
+      "reinitializeSuccess": "所有配置已重新初始化。请检查问题是否已解决；如果没有，请向我们反馈。"
+    }
+  },
+  "syncCookie": {
+    "missing": "（缺失）",
+    "pickCookie": "选择 Cookie",
+    "refreshTooltip": "刷新以获取最新 Cookie",
+    "sharingWarning": "警告：与他人分享 Cookie 可能导致登录凭据泄露！",
+    "title": "同步 Cookie",
+    "toast": {
+      "notFound": "未找到该 Cookie，它可能已不存在。",
+      "refreshed": "Cookie 刷新成功。"
+    },
+    "viewCookie": "查看 Cookie"
+  },
+  "curlImport": {
+    "title": "导入 cURL（Bash）",
+    "description": "粘贴 DevTools 的 Copy as cURL (bash)。仅在本机解析，不执行命令、不发出请求。关闭弹窗会清空原文。",
+    "inputLabel": "Bash cURL 命令",
+    "placeholder": "curl 'https://api.example.com/path' -H 'X-Environment: staging'",
+    "scope": "{method} · {domain} 及其子域名",
+    "scopeDescription": "仅以域名和请求方法作为条件。路径、查询参数、协议和端口不会保留，也不受限制。",
+    "pausedDescription": "新配置默认暂停。启用前请检查范围和请求头。请求头的值可能含凭据，会保存在本地配置中。",
+    "confirm": "创建暂停的配置",
+    "warningBody": "不导入请求体及其隐式请求头，保留推断的请求方法。",
+    "warningNetwork": "不导入网络、代理、重试和输出选项。",
+    "warningDuplicate": "重复请求头按名称忽略大小写合并，保留最后一个值。",
+    "errorSyntax": "仅支持一条 Bash cURL 命令。请检查引号与续行；不支持 Shell 展开、操作符、额外命令及 cmd/PowerShell 语法。",
+    "errorCommand": "命令须以 curl 开始，使用 Bash 格式。",
+    "errorOption": "存在不支持、有歧义或缺少参数值的选项。请移除后检查预览。",
+    "errorUrl": "请提供一个 HTTP(S) URL，不支持 URL 内凭据、URL 通配展开和 IPv6 字面量。",
+    "errorHeader": "至少需要一个有效且非空的请求头。不支持非法名称、控制字符、空值（Name;）和 cURL 的 Name: 删除语义。",
+    "errorMethod": "该请求方法无法转换为 Chrome 的请求方法条件。",
+    "errorFile": "不导入文件引用，请直接粘贴请求头、Cookie 或请求体文本。"
+  },
+  "exportPrivacy": {
+    "retain": "保留敏感 Header 值",
+    "summary": "识别到 {count} 个敏感 Header 值：{names}",
+    "redacted": "默认清空识别到的敏感 Header 值，包括停用的行。",
+    "included": "将包含敏感 Header 值，请在分享前检查预览。",
+    "cookies": "同步的 Cookie 值始终清空。",
+    "warning": "其他 Header、URL、名称和备注中仍可能包含自定义密钥。请检查下方实际导出内容。",
+    "invalid": "修正 JSON 和交换格式后才能导出。",
+    "failed": "导出失败，请检查预览后重试。",
+    "tooLarge": "导出内容超过 1 MiB，请减少所选配置或缩短内容。"
+  },
+  "profileImport": {
+    "title": "导入预检",
+    "invalidJson": "输入有效 JSON 后查看导入内容。",
+    "tooLarge": "单次导入不能超过 1 MiB，请拆分为多个较小的文件。",
+    "invalid": "请先修复以下错误，当前没有保存任何配置。",
+    "summary": "{profiles} 个配置 · {groups} 个分组 · 文件中 {enabled} 个已启用",
+    "action": "操作",
+    "domains": "请求域名",
+    "unrestrictedDomains": "未限定请求域名",
+    "firstRows": "仅展示前 {count} 个配置，确认后将导入全部配置。",
+    "keepEnabled": "保留文件中的启用状态",
+    "enabledNote": "文件中已启用的配置将立即生效。已有配置保持不变。",
+    "pausedNote": "导入后默认暂停，请检查后再启用。已有配置保持不变。",
+    "actions": {
+      "modifyHeaders": "修改 Header",
+      "redirect": "重定向",
+      "block": "阻断",
+      "allow": "放行",
+      "allowAllRequests": "放行全部请求",
+      "upgradeScheme": "升级为 HTTPS"
+    }
+  }
+}

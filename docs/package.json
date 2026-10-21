@@ -1,0 +1,26 @@
+{
+  "name": "docs",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@breeze/ui": "workspace:*",
+    "@fontsource-variable/roboto-mono": "catalog:",
+    "medium-zoom": "catalog:",
+    "vitepress": "catalog:",
+    "vue": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "catalog:",
+    "oxc-minify": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-vue-devtools": "catalog:",
+    "vitepress-plugin-llms": "catalog:",
+    "vitepress-sidebar": "catalog:"
+  }
+}

@@ -1,0 +1,280 @@
+<script setup lang="ts">
+import type { HTMLAttributes } from "vue";
+import { Button } from "@breeze/ui/components/button";
+import {
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuShortcut,
+} from "@breeze/ui/components/dropdown-menu";
+import {
+  Input,
+} from "@breeze/ui/components/input";
+import { Kbd, KbdGroup } from "@breeze/ui/components/kbd";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@breeze/ui/components/tooltip";
+import { cn } from "@breeze/ui/lib/utils";
+import { useEventBus } from "@vueuse/core";
+import { match } from "ts-pattern";
+import { computed, ref, useTemplateRef } from "vue";
+import { useI18n } from "vue-i18n";
+import { useCompactScreen } from "@/composables/useCompactScreen";
+import { useProfilesStore } from "@/entrypoints/popup/stores/useProfilesStore";
+import { useSettingsStore } from "@/entrypoints/popup/stores/useSettingsStore";
+import IconsGroupWithMore from "../ProfileActions/IconsGroupWithMore.vue";
+import ProfileManage from "../Sidebar/components/ProfileManage.vue";
+import AddRuleOptionDialog from "./components/AddRuleOptionDialog/index.vue";
+import { openAddRuleOptionDialogKey } from "./components/AddRuleOptionDialog/open";
+import CurlImportDialog from "./components/CurlImportDialog.vue";
+import EmojiPicker from "./components/EmojiPicker.vue";
+import ProfileBadges from "./components/ProfileBadges.vue";
+import { useHeaderShortcuts } from "./useHeaderShortcuts";
+
+const { class: className } = defineProps<{
+  class?: HTMLAttributes["class"];
+}>();
+
+const profilesStore = useProfilesStore();
+const { t } = useI18n();
+
+const isCompact = useCompactScreen();
+const addRuleOptionDialogBus = useEventBus(openAddRuleOptionDialogKey);
+const profileSearchOpen = ref(false);
+const profileActionsRef = useTemplateRef("profileActionsRef");
+
+const profileNameEditing = ref(false);
+const profileNameInput = ref<string>("");
+function handleEditProfileName() {
+  if (profileNameInput.value.length && profilesStore.selectedProfile) {
+    profilesStore.selectedProfile.name = profileNameInput.value;
+  }
+  profileNameEditing.value = false;
+}
+
+const settingsStore = useSettingsStore();
+const editorUrl = browser.runtime.getURL("/popup.html#/profiles");
+
+const defaultTab = computed(() => {
+  return match(profilesStore.selectedProfile.ruleActionType)
+    .with("modifyHeaders", "redirect", () => "actions" as const)
+    .otherwise(() => "conditions" as const);
+});
+
+const {
+  addRuleOptionShortcutKeys,
+  profileSearchShortcutKeys,
+  redoShortcutKeys,
+  toggleProfileShortcutKeys,
+  undoShortcutKeys,
+} = useHeaderShortcuts({
+  canRedo: () => profilesStore.canRedo,
+  canUndo: () => profilesStore.canUndo,
+  openAddRuleOptionDialog: () => addRuleOptionDialogBus.emit({ target: defaultTab.value }),
+  openProfileSearch: () => profileSearchOpen.value = true,
+  redo: profilesStore.redo,
+  toggleProfile: () => profilesStore.toggleProfileEnabled(profilesStore.selectedProfile.id),
+  undo: profilesStore.undo,
+});
+
+const undoAndRedoButtonGroup = [
+  {
+    key: "undo",
+    icon: "i-lucide-undo-2",
+    label: t("common.undo"),
+    shortcutKeys: undoShortcutKeys,
+    get disabled() {
+      return !profilesStore.canUndo;
+    },
+    onClick: profilesStore.undo,
+  },
+  {
+    key: "redo",
+    icon: "i-lucide-redo-2",
+    label: t("common.redo"),
+    shortcutKeys: redoShortcutKeys,
+    get disabled() {
+      return !profilesStore.canRedo;
+    },
+    onClick: profilesStore.redo,
+  },
+] as const;
+</script>
+
+<template>
+  <header
+    :class="cn(
+      `
+        @container/profile-header flex min-w-0 items-center justify-between
+        gap-2 border-b bg-card px-3 py-2
+      `,
+      settingsStore.powerOn || 'opacity-60',
+      className,
+    )"
+  >
+    <div
+      class="flex min-w-0 items-center gap-1"
+    >
+      <EmojiPicker
+        v-model="profilesStore.selectedProfile.emoji" class="shrink-0"
+      />
+      <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+        <span
+          class="
+            px-1.5 text-[10px] font-semibold tracking-[0.12em]
+            text-muted-foreground uppercase
+          "
+        >{{ t("brand.name") }}</span>
+        <div class="flex min-w-0 items-center gap-1">
+          <Button
+            v-if="!profileNameEditing"
+            data-testid="profile-name"
+            variant="ghost"
+            class="
+              flex min-w-0 shrink items-center gap-1 px-1.5 text-base
+              font-semibold
+            "
+            @click="() => {
+              profileNameInput = profilesStore.selectedProfile.name
+              profileNameEditing = true
+            }"
+          >
+            <span
+              class="
+                max-w-32 min-w-0 truncate
+                @[64rem]/profile-header:max-w-45
+                @[80rem]/profile-header:max-w-60
+                @[96rem]/profile-header:max-w-80
+              "
+            >
+              {{ profilesStore.selectedProfile.name }}</span>
+          </Button>
+          <div v-else class="flex min-w-0 flex-1 gap-1.5">
+            <Input
+              v-model.trim="profileNameInput"
+              data-testid="profile-name-input"
+              :class="cn(`
+                max-w-45 px-1.5 text-base font-semibold
+                @[80rem]/profile-header:max-w-60
+                @[96rem]/profile-header:max-w-80
+              `, profileNameInput.length === 0 && `border-destructive`)"
+              required
+              @keyup.enter="handleEditProfileName"
+              @keyup.esc="profileNameEditing = false"
+            />
+            <Button
+              data-testid="profile-name-save"
+              variant="ghost"
+              size="icon"
+              class="flex items-center gap-2 text-base"
+              @click="handleEditProfileName"
+            >
+              <i class="i-lucide-check-check size-4" />
+            </Button>
+          </div>
+          <ProfileBadges
+            v-if="!profileNameEditing"
+            class="
+              shrink-0
+              max-[400px]:hidden
+            "
+            :profile="profilesStore.selectedProfile"
+            @open-change-rule-action-type="profileActionsRef?.openChangeRuleActionType()"
+            @open-priority="profileActionsRef?.openPriority()"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="toolbar-actions flex shrink-0 items-center gap-1">
+      <CurlImportDialog />
+      <Button as-child size="icon-sm" variant="ghost">
+        <a :href="editorUrl" target="_blank" :aria-label="t('profile.sidebar.openInTab')" :title="t('profile.sidebar.openInTab')" data-testid="open-editor-tab">
+          <i class="i-lucide-external-link size-4" />
+        </a>
+      </Button>
+      <Button
+        type="search"
+        variant="ghost"
+        size="sm"
+        class="h-8 gap-1 rounded-lg px-2"
+        :aria-label="t('common.search')"
+        @click="profileSearchOpen = true"
+      >
+        <i class="-ml-0.5 i-lucide-search size-3.5 text-accent-foreground/80" />
+        <div class="flex gap-0.5">
+          <span
+            v-for="(key, index) in profileSearchShortcutKeys"
+            :key="index"
+            class="text-xs text-muted-foreground"
+          >
+            {{ key }}
+          </span>
+        </div>
+      </Button>
+
+      <template v-if="!isCompact">
+        <TooltipProvider v-for="btn in undoAndRedoButtonGroup" :key="btn.key">
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                :disabled="btn.disabled"
+                :aria-label="btn.label"
+                @click="btn.onClick"
+              >
+                <i :class="cn(btn.icon, 'size-4')" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" class="flex items-center gap-2">
+              <span>{{ btn.label }}</span>
+              <KbdGroup class="z-50">
+                <Kbd v-for="key in btn.shortcutKeys" :key>
+                  {{ key }}
+                </Kbd>
+              </KbdGroup>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </template>
+
+      <IconsGroupWithMore
+        ref="profileActionsRef"
+        :profile="profilesStore.selectedProfile"
+        :toggle-shortcut-keys="toggleProfileShortcutKeys"
+      >
+        <template #after-main>
+          <AddRuleOptionDialog
+            :default-tab
+            :shortcut-keys="addRuleOptionShortcutKeys"
+            :tooltip-text="t('profile.header.addActionOrConditionTooltip')"
+          />
+        </template>
+        <template #compact-extra>
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              v-for="btn in undoAndRedoButtonGroup"
+              :key="btn.key"
+              :disabled="btn.disabled"
+              @click="btn.onClick"
+            >
+              <span>{{ btn.label }}</span>
+              <DropdownMenuShortcut>
+                {{ btn.shortcutKeys.join("+") }}
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem @click="addRuleOptionDialogBus.emit({ target: 'actions' })">
+              <span>{{ t("profile.header.addActionOrCondition") }}</span>
+              <DropdownMenuShortcut>
+                {{ addRuleOptionShortcutKeys.join("+") }}
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </template>
+      </IconsGroupWithMore>
+    </div>
+    <ProfileManage v-model:open="profileSearchOpen" />
+  </header>
+</template>

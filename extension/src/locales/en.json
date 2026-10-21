@@ -1,0 +1,587 @@
+{
+  "brand": {
+    "name": "Breeze"
+  },
+  "diagnostics": {
+    "title": "Profile diagnostics",
+    "registrationNotice": "Registration reflects the last background update, not an observed network request. Saving changes may take a moment.",
+    "urlLabel": "Check a request URL or domain",
+    "urlPlaceholder": "https://api.example.com/request",
+    "localNotice": "Local domain check only. No request is sent. A passing domain does not confirm the profile ran.",
+    "status": {
+      "globalOff": "Global power is off",
+      "paused": "Profile paused",
+      "invalidOperations": "Invalid header operations",
+      "noActiveOperations": "No active operations",
+      "registrationError": "Registration error",
+      "pending": "Pending registration",
+      "registered": "Registered"
+    },
+    "result": {
+      "invalidUrl": "Enter a valid request URL or domain.",
+      "noActiveOperations": "No enabled, non-empty operations can be registered.",
+      "excludedDomain": "Excluded request domain: this URL cannot match the current domain conditions.",
+      "outsideDomains": "Outside the included request domains: this URL cannot match the current domain conditions.",
+      "domainMatch": "Request domain passes the local check. Check the registration status before testing a request.",
+      "unknown": "Unknown: the local domain check cannot determine whether this request would match."
+    },
+    "limits": {
+      "urlPattern": "DNR URL patterns are not evaluated locally.",
+      "regex": "DNR regular expressions are not evaluated locally.",
+      "initiator": "The request initiator is unknown; it can differ from the request URL.",
+      "topFrame": "The associated top-level frame is unknown.",
+      "party": "The first-party or third-party relationship is unknown.",
+      "resource": "The request resource type is unknown.",
+      "method": "The HTTP request method is unknown.",
+      "tab": "Tab and tab-group conditions need live browser context.",
+      "domainSyntax": "Only literal ASCII domains can be checked locally. Use punycode for internationalized rule domains; wildcard and URL entries are not rewritten.",
+      "urlScheme": "This URL scheme is not supported by the local check.",
+      "invalidOperations": "Fix invalid enabled header names or values before testing this profile."
+    },
+    "conflictsTitle": "Potential header conflicts",
+    "conflictsNotice": "Enabled set/remove operations may compete within this profile or with profiles whose conditions may overlap. Other conditions and DNR priority can affect the outcome.",
+    "requestConflict": "{name}: request header {header}",
+    "responseConflict": "{name}: response header {header}"
+  },
+  "environments": {
+    "title": "Environment switching",
+    "defaultName": "Environments",
+    "select": "Select environment in {name}",
+    "off": "Paused",
+    "hint": "Group profiles to switch a complete environment at once.",
+    "create": "Group environments",
+    "description": "Choose profiles to put in a mutually exclusive environment group. Moving a profile removes its previous group membership.",
+    "name": "Group name",
+    "selectionHint": "Choose at least two profiles. Keep one currently enabled profile; all other members will be paused."
+  },
+  "addRuleOptionDialog": {
+    "disabledTooltip": {
+      "modifyHeadersRuleActionType": "Change the rule action type to Modify Headers to add this action.",
+      "regexFilterBlockedByUrlFilter": "Delete the existing URL filter first. Only one of URL filter or regex filter can be used.",
+      "redirectRuleActionType": "Change the rule action type to Redirect to add this action.",
+      "redirectUrlExists": "Delete the existing redirect URL before adding another one.",
+      "conditionAlreadyAdded": "This type of condition has already been added and cannot be added again.",
+      "urlFilterBlockedByRegexFilter": "Delete the existing regex filter first. Only one of URL filter or regex filter can be used."
+    },
+    "items": {
+      "cookieSyncRequestHeader": {
+        "description": "Sync cookies for a specific website to the request header.",
+        "title": "Cookie Sync to Request Header"
+      },
+      "domainType": {
+        "description": "Specifies whether the network request is first-party or third-party to the domain from which it originated.",
+        "title": "Domain Type"
+      },
+      "excludedInitiatorDomains": {
+        "description": "The rule will not match network requests originating from the list of excluded initiator domains. If the list is empty or omitted, no domains are excluded. This takes precedence over initiator domains.",
+        "title": "Excluded Initiator Domains"
+      },
+      "excludedTopDomains": {
+        "description": "The rule will not match requests whose associated top-level frame domain matches one from the list of excluded top domains. If omitted, no top-level frame domains are excluded.",
+        "title": "Excluded Top Domains"
+      },
+      "excludedRequestDomains": {
+        "description": "The rule will not match network requests when the domains matches one from the list of excludedRequestDomains. If the list is empty or omitted, no domains are excluded. This takes precedence over requestDomains.",
+        "title": "Excluded Request Domains"
+      },
+      "excludedRequestMethods": {
+        "description": "List of request methods which the rule won't match. Only one of requestMethods and excludedRequestMethods should be specified. If neither is specified, all request methods are matched.",
+        "title": "Excluded Request Methods"
+      },
+      "excludedResourceTypes": {
+        "description": "List of resource types which the rule won't match. Only one of resourceTypes and excludedResourceTypes should be specified. If neither is specified, all resource types except main_frame are blocked.",
+        "title": "Excluded Resource Types"
+      },
+      "excludedTabIds": {
+        "description": "The rule will not match requests from the selected tabs. Tab bindings become invalid after the browser restarts.",
+        "title": "Excluded Tabs"
+      },
+      "excludedTabGroups": {
+        "description": "The rule will not match requests from tabs in the selected tab groups. Requires access to tab groups.",
+        "title": "Excluded Tab Groups"
+      },
+      "initiatorDomains": {
+        "description": "The rule will only match network requests originating from the list of initiator domains. If the list is omitted, the rule is applied to requests from all domains. An empty list is not allowed.",
+        "title": "Initiator Domains"
+      },
+      "modifyRequestHeader": {
+        "description": "Set, remove, or append HTTP request headers.",
+        "title": "Modify HTTP Request Header"
+      },
+      "modifyResponseHeader": {
+        "description": "Set, remove, or append HTTP response headers.",
+        "title": "Modify HTTP Response Header"
+      },
+      "regexFilter": {
+        "description": "The rule will only match network requests whose URL contains any of the specified substrings. If the list is omitted, the rule is applied to requests with all URLs. An empty list is not allowed. Only one of urlFilter or regexFilter can be specified.",
+        "title": "Regex Filter"
+      },
+      "requestDomains": {
+        "description": "The rule will only match network requests when the domain matches one from the list of requestDomains. If the list is omitted, the rule is applied to requests from all domains. An empty list is not allowed.",
+        "title": "Request Domains"
+      },
+      "topDomains": {
+        "description": "The rule will only match requests whose associated top-level frame domain matches one from the list of top domains. If omitted, all top-level frame domains are accepted.",
+        "title": "Top Domains"
+      },
+      "requestMethods": {
+        "description": "List of HTTP request methods which the rule can match. An empty list is not allowed. Note: Specifying requestMethods will also exclude non-HTTP(s) requests.",
+        "title": "Request Methods"
+      },
+      "resourceTypes": {
+        "description": "List of resource types which the rule can match. An empty list is not allowed.",
+        "title": "Resource Types"
+      },
+      "simpleRedirectUrl": {
+        "description": "Redirect matched requests to a specific URL.",
+        "title": "Simple Redirect URL"
+      },
+      "tabIds": {
+        "description": "The rule will only match requests from the selected tabs. Tab bindings become invalid after the browser restarts.",
+        "title": "Tabs"
+      },
+      "tabGroups": {
+        "description": "The rule will only match requests from tabs in the selected tab groups. Requires access to tab groups.",
+        "title": "Tab Groups"
+      },
+      "urlFilter": {
+        "description": "The rule will only match network requests whose URL contains any of the specified substrings. If the list is omitted, the rule is applied to requests with all URLs. An empty list is not allowed. Only one of urlFilter or regexFilter can be specified.",
+        "title": "URL Filter"
+      },
+      "urlRegexFilterCaseSensitive": {
+        "description": "Specifies whether the URL filter is case sensitive.",
+        "title": "Url & Regex Filter Case Sensitive"
+      }
+    },
+    "tabs": {
+      "actions": "Actions",
+      "conditions": "Conditions"
+    }
+  },
+  "commentsDialog": {
+    "description": "Add or edit comments for this profile field.",
+    "placeholder": "Add your comments here...",
+    "title": "Edit Comments"
+  },
+  "common": {
+    "additionalPermission": "Additional permission",
+    "addCondition": "Add a condition",
+    "auto": "Auto",
+    "backToProfiles": "Back to profiles",
+    "beautify": "Beautify",
+    "cancel": "Cancel",
+    "checkbox": "Checkbox",
+    "clearAll": "Clear all",
+    "close": "Close",
+    "comments": "Comments",
+    "confirm": "Confirm",
+    "copy": "Copy",
+    "dark": "Dark",
+    "deleteCondition": "Delete this condition",
+    "deleteDomain": "Delete this domain",
+    "deleteHeaderMod": "Delete this header mod",
+    "domain": "Domain",
+    "duplicate": "Duplicate",
+    "github": "GitHub",
+    "import": "Import",
+    "light": "Light",
+    "loading": "Loading",
+    "moreOptions": "More options",
+    "name": "Name",
+    "noComments": "No comments",
+    "noResultsFound": "No results found.",
+    "notAvailable": "Not available",
+    "off": "Off",
+    "on": "On",
+    "recommended": "Recommended",
+    "radio": "Radio",
+    "redo": "Redo",
+    "reportIssue": "Report an issue",
+    "reset": "Reset",
+    "save": "Save",
+    "search": "Search",
+    "selectOptions": "Select options",
+    "settings": "Settings",
+    "share": "Share",
+    "undo": "Undo",
+    "value": "Value"
+  },
+  "condition": {
+    "domains": {
+      "excludedInitiatorDomains": {
+        "title": "Excluded Initiator Domains Filter"
+      },
+      "excludedRequestDomains": {
+        "title": "Excluded Request Domains Filter"
+      },
+      "excludedTopDomains": {
+        "title": "Excluded Top Domains Filter"
+      },
+      "initiatorDomains": {
+        "title": "Initiator Domains Filter"
+      },
+      "requestDomains": {
+        "title": "Request Domains Filter"
+      },
+      "topDomains": {
+        "title": "Top Domains Filter"
+      },
+      "useCurrentTabDomain": "Use the domain of the current tab"
+    },
+    "domainType": {
+      "firstParty": "First Party",
+      "thirdParty": "Third Party",
+      "title": "Domain Type"
+    },
+    "excludedRequestMethods": {
+      "title": "Excluded Request Methods"
+    },
+    "excludedResourceTypes": {
+      "title": "Excluded Resource Types"
+    },
+    "excludedTabIds": {
+      "title": "Excluded Tabs"
+    },
+    "excludedTabGroups": {
+      "title": "Excluded Tab Groups"
+    },
+    "regexFilter": {
+      "title": "Regex Filter"
+    },
+    "requestMethods": {
+      "title": "Request Methods"
+    },
+    "resourceType": {
+      "cspReport": "CSP Report",
+      "font": "Font",
+      "image": "Image",
+      "mainFrame": "Main Frame",
+      "media": "Media",
+      "object": "Object",
+      "other": "Other",
+      "ping": "Ping",
+      "script": "Script",
+      "stylesheet": "Stylesheet",
+      "subFrame": "Sub Frame",
+      "webbundle": "WebBundle",
+      "websocket": "WebSocket",
+      "webtransport": "WebTransport",
+      "xmlhttprequest": "XMLHttpRequest"
+    },
+    "resourceTypes": {
+      "title": "Resource Types"
+    },
+    "selectPlaceholder": "Select {name}...",
+    "tabIds": {
+      "quickSelect": "Quickly replace selected tabs",
+      "selectPlaceholder": "Select tabs...",
+      "title": "Tabs",
+      "unavailableTab": "Tab is unavailable because it was closed or the browser was restarted",
+      "untitledTab": "Untitled tab",
+      "useCurrentGroup": "Use current group",
+      "useCurrentTab": "Use current tab",
+      "useCurrentWindow": "Use current window"
+    },
+    "tabGroups": {
+      "addCurrentTabGroup": "Add the current tab group",
+      "unnamedGroupLabel": "\"{tabTitle}\" | \"{tabTitle} and {remainingCount} other tab\" | \"{tabTitle} and {remainingCount} other tabs\"",
+      "selectPlaceholder": "Select tab groups...",
+      "title": "Tab Groups",
+      "unavailableGroup": "Tab group is unavailable"
+    },
+    "urlFilter": {
+      "title": "URL Filter",
+      "useCurrentTabRootUrl": "Use the root URL of the current tab"
+    },
+    "urlFilterCaseSensitive": {
+      "title": "Url Filter Case Sensitive"
+    }
+  },
+  "emoji": {
+    "remove": "Remove emoji",
+    "categories": {
+      "activities": "Activities",
+      "animalsNature": "Animals & Nature",
+      "flags": "Flags",
+      "foodDrink": "Food & Drink",
+      "objects": "Objects",
+      "smileysPeople": "Smileys & People",
+      "symbols": "Symbols",
+      "travelPlaces": "Travel & Places"
+    }
+  },
+  "share": {
+    "copyLink": "Copy Share Link",
+    "copyToClipboard": "Copy to Clipboard",
+    "saveAsFile": "Save as File",
+    "selectAll": "Select all",
+    "title": "Share Profiles",
+    "toast": {
+      "jsonCopied": "Profile JSON copied to clipboard",
+      "linkCopied": "Share link copied to clipboard"
+    },
+    "unselectAll": "Unselect all"
+  },
+  "group": {
+    "actions": {
+      "addItem": "Add a new item",
+      "deleteGroup": "Delete this group",
+      "openDocumentation": "Open documentation",
+      "transferGroupTypeTo": "Transfer group type to"
+    },
+    "collapse": "Collapse group",
+    "expand": "Expand group"
+  },
+  "headerInput": {
+    "description": "Paste one Header: value per line. All valid lines are added together as Set operations; fix every error before inserting.",
+    "emptyValueWarning": "Blank value: no header operation will be generated.",
+    "headersLabel": "HTTP headers",
+    "insert": "Insert {count} headers",
+    "invalidName": "Use an HTTP token name without spaces, colons, or line breaks.",
+    "invalidValue": "Header values cannot contain line breaks. Use Paste headers for a list.",
+    "lineInvalidName": "Line {line}: invalid header name.",
+    "lineInvalidValue": "Line {line}: header value contains a line break.",
+    "lineMissingColon": "Line {line}: expected Header: value.",
+    "pasteHeaders": "Paste headers",
+    "placeholder": "Authorization: Bearer token\nX-Environment: development",
+    "preview": "Preview ({count} headers)",
+    "radioDescription": "This is a single-choice group. New headers are added disabled; select one after inserting.",
+    "savedHeaderKept": "This edit is not saved. The last saved valid header stays active when enabled."
+  },
+  "headerMod": {
+    "currentOperation": "Current operation: {operation}",
+    "operation": {
+      "append": "Append",
+      "remove": "Remove",
+      "set": "Set"
+    },
+    "recent": {
+      "add": "Add {name} header",
+      "remove": "Remove {name} from recent headers",
+      "title": "Recent: "
+    },
+    "requestHeaders": "Request Headers",
+    "responseHeaders": "Response Headers",
+    "switchTo": "Switch to {operation}"
+  },
+  "import": {
+    "confirm": "Confirm Import",
+    "loadFromFile": "Load from File",
+    "profile": "profile",
+    "profiles": "profiles",
+    "title": "Import Profiles with JSON",
+    "toast": {
+      "cookiesPermissionRequired": "Import cancelled: cookies permission is required for cookie sync profiles",
+      "fileLoaded": "File loaded successfully",
+      "fileReadFailed": "Failed to read file",
+      "invalidJson": "Import failed: Invalid JSON format",
+      "invalidShareLink": "Import failed: Invalid share link",
+      "invalidShareLinkDescription": "Check that the share link is complete and does not include extra characters.",
+      "success": "Successfully imported {count} {label}!"
+    }
+  },
+  "jsonEditor": {
+    "search": {
+      "closeSearch": "Close search",
+      "findPlaceholder": "Find",
+      "matchCase": "Match case",
+      "matchWholeWord": "Match whole word",
+      "nextMatch": "Next match",
+      "previousMatch": "Previous match",
+      "replace": "Replace",
+      "replaceAll": "Replace all",
+      "replacePlaceholder": "Replace",
+      "toggleReplace": "Toggle replace",
+      "useRegularExpression": "Use regular expression"
+    }
+  },
+  "profile": {
+    "actions": {
+      "addToGroup": "Add profile to group",
+      "createNewGroup": "Create new group",
+      "delete": "Delete",
+      "openSecondaryOperations": "Open Secondary Operations Dropdown",
+      "pause": "Pause",
+      "removeFromGroup": "Remove from group",
+      "resume": "Resume",
+      "ruleActionType": "Rule action type",
+      "share": "Share",
+      "unnamedGroupLabel": "\"{profileName}\" | \"{profileName} and {remainingCount} other profile\" | \"{profileName} and {remainingCount} other profiles\""
+    },
+    "alert": {
+      "globalRuleDescription": "Add a condition to avoid issues.",
+      "globalRuleTitle": "This profile affects every request and might break sites.",
+      "implicitActionDescription": "It may already be active even without additional action settings.",
+      "implicitActionTitle": "This profile already has an action.",
+      "ignoreWarning": "Ignore warning",
+      "registrationErrorTitle": "This profile caused an error when registering rules."
+    },
+    "changeType": {
+      "description": "Select a new action type for this profile. Switching types may remove existing actions.",
+      "placeholder": "Select a type",
+      "title": "Change Rule Action Type"
+    },
+    "empty": "No data, please add any actions or conditions first.",
+    "header": {
+      "addActionOrCondition": "Add action or condition",
+      "addActionOrConditionTooltip": "Add a new action or condition",
+      "priority": "Priority",
+      "priorityLabel": "Priority: ",
+      "priorityValue": "Priority: {priority}",
+      "ruleActionType": "Rule action type: {type}"
+    },
+    "priority": {
+      "description": "Priority defines the conflict resolution strategy for rules. When multiple rules match a single request, the system executes the rule with the higher weight as a priority.",
+      "title": "Edit Rule Priority"
+    },
+    "search": {
+      "batchManage": "Batch manage",
+      "deleteSelectedProfiles": "Delete all selected profiles",
+      "pauseSelectedProfiles": "Pause all selected profiles",
+      "placeholder": "Search profiles...",
+      "resumeSelectedProfiles": "Resume all selected profiles",
+      "title": "Search profiles"
+    },
+    "sidebar": {
+      "changelog": "Changelog",
+      "defaultActionType": "Action type by default",
+      "documentation": "Documentation",
+      "makeDefault": "Make as default",
+      "newProfile": "New profile",
+      "openInTab": "Open in tab",
+      "openMenu": "Open sidebar menu",
+      "profiles": "Profiles",
+      "quickCreate": "Quick create",
+      "quickCreateDescription": "The default rule action type can be changed in the submenu of New profile",
+      "resources": "Resources",
+      "turnOff": "Turn off extension",
+      "turnOn": "Turn on extension"
+    }
+  },
+  "profileGroup": {
+    "actions": {
+      "delete": "Delete group",
+      "newProfile": "New profile in group",
+      "pauseAndRemember": "Pause and remember",
+      "pauseAndRememberDescription": "Pause the group and remember its enabled profiles. Only those profiles will be enabled when the group is resumed. Changing a profile's status elsewhere clears this memory.",
+      "resume": "Resume group",
+      "resumeRemembered": "Resume saved profiles",
+      "resumeRememberedDescription": "Resume the profiles remembered when the group was paused. Checkbox groups restore every remembered profile; radio groups restore the first remembered profile. Changing a profile's status elsewhere clears this memory.",
+      "ungroup": "Ungroup"
+    },
+    "namePlaceholder": "Name this group"
+  },
+  "redirectUrl": {
+    "delete": "Delete this redirect URL",
+    "title": "Redirect URL",
+    "useCurrentTabUrl": "Use the URL of the current tab"
+  },
+  "ruleAction": {
+    "allow": "Allow",
+    "allowAllRequests": "Allow all requests",
+    "block": "Block",
+    "modifyHeaders": "Modify headers",
+    "redirect": "Redirect",
+    "upgradeScheme": "Upgrade scheme"
+  },
+  "settings": {
+    "descriptions": {
+      "hideRecentlyAdded": "Hide shortcuts for recently added request and response header names.",
+      "showCommentsInline": "Show each field's comments next to its other actions instead of in the More Actions menu."
+    },
+    "fieldLabel": "{label}:",
+    "fields": {
+      "hideRecentlyAdded": "Hide recently added headers",
+      "language": "Language",
+      "showCommentsInline": "Show field comments inline",
+      "theme": "Theme"
+    },
+    "groups": {
+      "appearance": "Appearance",
+      "profiles": "Profiles",
+      "troubleshooting": "Troubleshooting"
+    },
+    "reset": {
+      "cannotUndo": "This action cannot be undone.",
+      "description": "Are you sure you want to reset all settings to their default values?",
+      "title": "Reset extension settings",
+      "tooltip": "Reset extension settings"
+    },
+    "theme": {
+      "auto": "Auto",
+      "dark": "Dark",
+      "light": "Light"
+    },
+    "troubleshooting": {
+      "reinitializeAll": "Reinitialize all profiles",
+      "reinitializeDescription": "If you find that the number of active profiles you defined is inconsistent with the number displayed in the extension popup badge, please click the button below.",
+      "reinitializeError": "Failed to reinitialize profiles. Please report this issue to us.",
+      "reinitializeSuccess": "All profiles have been reinitialized. Please check if the issue is resolved. If not, please report this issue to us."
+    }
+  },
+  "syncCookie": {
+    "missing": "(Missing)",
+    "pickCookie": "Pick a cookie",
+    "refreshTooltip": "Refresh to get the latest cookie",
+    "sharingWarning": "Warning: Sharing cookies with others may result in the leakage of login credentials!",
+    "title": "Sync Cookies",
+    "toast": {
+      "notFound": "The cookie was not found. It may no longer exist.",
+      "refreshed": "Cookie refreshed successfully."
+    },
+    "viewCookie": "View Cookie"
+  },
+  "curlImport": {
+    "title": "Import cURL (Bash)",
+    "description": "Paste Copy as cURL (bash) from DevTools. Parsing stays on this device; no command or request is executed. The input is cleared when this dialog closes.",
+    "inputLabel": "Bash cURL command",
+    "placeholder": "curl 'https://api.example.com/path' -H 'X-Environment: staging'",
+    "scope": "{method} · {domain} and its subdomains",
+    "scopeDescription": "Only the hostname and request method are used as conditions. Path, query, scheme and port are not retained or restricted.",
+    "pausedDescription": "Creates a new paused profile. Review the scope and headers before enabling it. Header values may contain credentials and are saved locally in the profile.",
+    "confirm": "Create paused profile",
+    "warningBody": "Request bodies and their implicit headers are not imported. The inferred request method is retained.",
+    "warningNetwork": "Network, proxy, retry and output options are not imported.",
+    "warningDuplicate": "Repeated header names are merged case-insensitively; the last value wins.",
+    "errorSyntax": "Use a single Bash cURL command. Shell expansion, operators, extra commands and cmd/PowerShell syntax are not supported. Check quoting and line continuations.",
+    "errorCommand": "The command must start with curl (Bash format).",
+    "errorOption": "An option is unsupported, ambiguous or missing its value. Remove it and review the preview.",
+    "errorUrl": "Provide exactly one HTTP(S) URL without credentials, URL glob patterns or IPv6 literals.",
+    "errorHeader": "Provide at least one valid, nonempty header. Invalid names, control characters, empty values (Name;), and cURL header suppression (Name:) are not supported.",
+    "errorMethod": "The request method cannot be represented by Chrome's request-method filter.",
+    "errorFile": "File references are not imported. Paste headers, cookies or body text directly instead."
+  },
+  "exportPrivacy": {
+    "retain": "Include sensitive Header values",
+    "summary": "{count} recognized sensitive Header value(s): {names}",
+    "redacted": "Recognized sensitive Header values are cleared by default, including disabled rows.",
+    "included": "Sensitive Header values are included. Check the preview before sharing.",
+    "cookies": "Synced cookie values are always cleared.",
+    "warning": "Custom secrets can remain in other headers, URLs, names, and comments. Review the actual export below.",
+    "invalid": "Fix the JSON and exchange schema before exporting.",
+    "failed": "Export failed. Try again after checking the preview.",
+    "tooLarge": "Export exceeds 1 MiB. Select fewer profiles or shorten the content."
+  },
+  "profileImport": {
+    "title": "Import preflight",
+    "invalidJson": "Enter valid JSON to inspect this import.",
+    "tooLarge": "Imports are limited to 1 MiB. Split this export into smaller files.",
+    "invalid": "Resolve these errors before importing. No profiles have been saved.",
+    "summary": "{profiles} profiles · {groups} groups · {enabled} enabled in the file",
+    "action": "Action",
+    "domains": "Request domains",
+    "unrestrictedDomains": "No request-domain restriction",
+    "firstRows": "Showing the first {count} profiles. All profiles will be imported.",
+    "keepEnabled": "Preserve the file’s enabled states",
+    "enabledNote": "Profiles enabled in the file will take effect immediately. Existing profiles are kept.",
+    "pausedNote": "Imported profiles start paused. Review them before enabling. Existing profiles are kept.",
+    "actions": {
+      "modifyHeaders": "Modify headers",
+      "redirect": "Redirect",
+      "block": "Block",
+      "allow": "Allow",
+      "allowAllRequests": "Allow all requests",
+      "upgradeScheme": "Upgrade to HTTPS"
+    }
+  }
+}

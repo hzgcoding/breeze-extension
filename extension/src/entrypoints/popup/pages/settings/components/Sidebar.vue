@@ -1,0 +1,75 @@
+<script setup lang="ts">
+import { Button } from "@breeze/ui/components/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@breeze/ui/components/tooltip";
+import { cn } from "@breeze/ui/lib/utils";
+import { useI18n } from "vue-i18n";
+import { useCreateSettings } from "../fields";
+
+const { class: className } = defineProps<{
+  class?: string;
+}>();
+
+const { t } = useI18n();
+const settings = useCreateSettings();
+
+function handleAnchorClick(anchor: string) {
+  const element = document.getElementById(anchor);
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth" });
+  }
+}
+</script>
+
+<template>
+  <aside
+    :class="cn(
+      `
+        workspace-rail flex h-full flex-col items-center justify-start border-r
+        bg-sidebar py-2
+      `,
+      className,
+    )"
+  >
+    <Button as-child size="icon-sm" variant="secondary">
+      <RouterLink
+        to="/profiles"
+      >
+        <i class="i-lucide-arrow-left size-4" />
+        <span class="sr-only">{{ t("common.backToProfiles") }}</span>
+      </RouterLink>
+    </Button>
+    <div
+      class="
+        flex h-4 items-center self-stretch
+        before:h-px before:w-full before:grow before:bg-border
+        before:content-['']
+      "
+    />
+    <div class="flex flex-col gap-1 px-2 py-1.25">
+      <TooltipProvider
+        v-for="value in settings"
+        :key="value.anchor"
+      >
+        <Tooltip>
+          <TooltipTrigger as-child>
+            <Button
+              size="icon-sm"
+              variant="secondary"
+              @click.prevent="handleAnchorClick(value.anchor)"
+            >
+              <i :class="cn('size-4', value.anchorIcon)" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            {{ value.fieldsetTitle }}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+  </aside>
+</template>

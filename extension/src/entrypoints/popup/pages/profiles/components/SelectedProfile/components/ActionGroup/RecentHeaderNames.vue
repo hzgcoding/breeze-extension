@@ -1,0 +1,66 @@
+<script setup lang="ts">
+import { Button } from "@breeze/ui/components/button";
+import { cn } from "@breeze/ui/lib/utils";
+import { useI18n } from "vue-i18n";
+
+const props = defineProps<{
+  names: string[];
+  class?: string;
+}>();
+
+const emit = defineEmits<{
+  (e: "add", name: string): void;
+  (e: "remove", name: string): void;
+}>();
+
+const { t } = useI18n();
+</script>
+
+<template>
+  <div
+    :class="cn(`flex items-center border-none`, props.class)"
+  >
+    <div class="flex w-full items-center gap-1">
+      <span class="sr-only">{{ t("headerMod.recent.title") }}</span>
+      <div v-auto-animate class="w-full gap-1 space-x-1">
+        <span
+          v-for="name in names"
+          :key="name"
+          class="group/recent relative shrink-0"
+        >
+          <Button
+            type="button"
+            size="sm"
+            variant="secondary"
+            class="
+              h-6 max-w-30 justify-start rounded-full py-0 pr-6 pl-3.5 text-sm
+              font-normal text-muted-foreground shadow-none
+              hover:text-foreground
+              xl:max-w-40
+            "
+            :aria-label="t('headerMod.recent.add', { name })"
+            @click="emit('add', name)"
+          >
+            <span class="truncate">{{ name }}</span>
+          </Button>
+          <Button
+            type="button"
+            size="icon-xs"
+            variant="ghost"
+            class="
+              absolute top-1/2 right-1 size-4 -translate-y-1/2 rounded-full
+              text-muted-foreground/70
+              hover:bg-primary/15 hover:text-primary
+              focus-visible:bg-destructive/15 focus-visible:text-destructive
+              focus-visible:ring-1 focus-visible:ring-destructive/40
+            "
+            @click="emit('remove', name)"
+          >
+            <i class="i-lucide-x size-3" />
+            <span class="sr-only">{{ t('headerMod.recent.remove', { name }) }}</span>
+          </Button>
+        </span>
+      </div>
+    </div>
+  </div>
+</template>

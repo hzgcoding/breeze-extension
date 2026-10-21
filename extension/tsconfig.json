@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "#": ["./src/entrypoints/popup"],
+      "#/*": ["./src/entrypoints/popup/*"],
+      "##": ["./src/entrypoints"],
+      "##/*": ["./src/entrypoints/*"],
+      "@": ["./src"],
+      "@/*": ["./src/*"],
+      "~": ["./src"],
+      "~/*": ["./src/*"],
+      "@@": ["."],
+      "@@/*": ["./*"],
+      "~~": ["."],
+      "~~/*": ["./*"]
+    }
+  },
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.e2e.json"
+    }
+  ],
+  "files": []
+}

@@ -1,0 +1,16 @@
+export const PROFILE_IMPORT_SCHEMA_VERSION = 2;
+export const MAX_PROFILE_IMPORT_BYTES = 1024 * 1024;
+
+export const PROFILE_GROUP_COLOR_PRESETS = [
+  "#dadce0",
+  "#8ab4f8",
+  "#f28b82",
+  "#fdd663",
+  "#81c995",
+  "#ff8bcb",
+  "#c58af9",
+  "#78d9ec",
+  "#fcad70",
+] as const;
+
+export const TAB_GROUP_ID_NONE = -1;

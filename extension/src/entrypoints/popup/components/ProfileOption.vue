@@ -1,0 +1,96 @@
+<script setup lang="tsx">
+import type { Profile } from "@/lib/schema";
+import { Button } from "@breeze/ui/components/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@breeze/ui/components/tooltip";
+import { cn } from "@breeze/ui/lib/utils";
+import { computed } from "vue";
+import { useProfilesStore } from "#/stores/useProfilesStore";
+
+const { profile, class: className } = defineProps<{
+  profile: Profile;
+  index: number;
+  class?: string;
+  as?: string;
+}>();
+
+const emit = defineEmits<{
+  (e: "click", event: MouseEvent): void;
+}>();
+
+const profilesStore = useProfilesStore();
+
+const isSelected = computed(() => profilesStore.manager.selectedProfileId === profile.id);
+</script>
+
+<template>
+  <Button
+    size="icon-sm"
+    :variant="isSelected ? 'default' : 'secondary'"
+    :class="cn('relative flex text-xl select-none', isSelected && 'bg-brand!', className)"
+    :as
+    @click="emit('click', $event)"
+  >
+    <TooltipProvider ignore-non-keyboard-focus>
+      <Tooltip>
+        <TooltipTrigger as-child>
+          <div class="relative flex size-full items-center justify-center">
+            <slot />
+            <span
+              :class="cn(
+                'flex max-w-full min-w-0 items-center justify-center',
+                { 'opacity-30': !profile.enabled },
+              )"
+            >
+              <template v-if="profile.emoji">
+                {{ profile.emoji }}
+              </template>
+              <span
+                v-else class="
+                  max-w-full overflow-hidden px-0.5 text-xs leading-none
+                  whitespace-nowrap
+                "
+              >
+                {{ profile.name }}
+              </span>
+            </span>
+            <span
+              v-if="profilesStore.profileId2ErrorMessageRecord[profile.id] || profilesStore.profileId2RelatedRuleIdRecord[profile.id]"
+              :class="cn(
+                `
+                  absolute top-0 right-0 z-10 inline-block aspect-square size-2
+                  translate-x-1/2 -translate-y-1/2 rounded-full
+                  bg-[radial-gradient(circle_at_35%_30%,oklch(1_0_0/calc(var(--depth)*.5)),#0000)]
+                  bg-center bg-no-repeat align-middle
+                  shadow-[0_2px_3px_-1px_color-mix(in_oklab,currentColor_calc(var(--depth)*100%),#0000)]
+                  [--depth:1]
+                `,
+                profilesStore.profileId2ErrorMessageRecord[profile.id] && `
+                  bg-error text-error
+                `,
+                profilesStore.profileId2RelatedRuleIdRecord[profile.id] && `
+                  bg-success text-success
+                `,
+              )"
+            />
+            <i
+              v-if="!profile.enabled"
+              :class="
+                cn(`
+                  absolute right-0 bottom-0 i-lucide-pause size-4 -translate-1/2
+                `)
+              "
+            />
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="right">
+          <p>{{ profile.name }}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  </Button>
+</template>

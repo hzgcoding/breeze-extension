@@ -1,0 +1,11 @@
+{
+  "extensionName": {
+    "message": "Breeze"
+  },
+  "extensionDescription": {
+    "message": "Manage and customize HTTP request & response headers with ease. Quickly set, append, or remove headers."
+  },
+  "toggleExtensionCommandDescription": {
+    "message": "Turn Breeze on or off"
+  }
+}

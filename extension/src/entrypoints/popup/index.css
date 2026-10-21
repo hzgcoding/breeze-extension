@@ -1,0 +1,173 @@
+@import "tailwindcss/preflight.css" layer(base);
+@import "@breeze/ui/styles/tailwind.css";
+
+@source "../..";
+
+@theme {
+  /* The popup is 600px wide. */
+  --breakpoint-sm: 590px;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+}
+
+:root {
+  color-scheme: light;
+  --brand: #117c70;
+  --background: #f3f6f7;
+  --foreground: #203238;
+  --card: #ffffff;
+  --card-foreground: #203238;
+  --popover: #ffffff;
+  --popover-foreground: #203238;
+  --primary: #117c70;
+  --primary-foreground: #ffffff;
+  --secondary: #eef3f4;
+  --secondary-foreground: #485e66;
+  --muted: #eef3f4;
+  --muted-foreground: #596f78;
+  --accent: #e4f0ed;
+  --accent-foreground: #11685f;
+  --border: #dde6e8;
+  --input: #d5e0e3;
+  --ring: #31998b;
+  --sidebar: #eaf0f1;
+}
+
+.dark {
+  color-scheme: dark;
+  --brand: #63c7b4;
+  --background: #141e23;
+  --foreground: #e4edef;
+  --card: #1b282e;
+  --card-foreground: #e4edef;
+  --popover: #223239;
+  --popover-foreground: #e4edef;
+  --primary: #63c7b4;
+  --primary-foreground: #102824;
+  --secondary: #293a41;
+  --secondary-foreground: #c4d5db;
+  --muted: #25353c;
+  --muted-foreground: #9db3bc;
+  --accent: #28463f;
+  --accent-foreground: #a5e1d4;
+  --border: #30424a;
+  --input: #3b5059;
+  --ring: #63c7b4;
+  --sidebar: #19262c;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--input) transparent;
+  }
+
+  input, textarea {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 20%, transparent);
+  }
+}
+
+@layer components {
+  .app-shell {
+    background: var(--background);
+  }
+
+  .workspace-rail {
+    border-color: var(--border);
+    background-image: none;
+  }
+
+  .workspace-rail > [data-slot="button"] {
+    margin-inline: auto;
+  }
+
+  .toolbar-actions [data-slot="button"] {
+    background: transparent;
+    color: var(--muted-foreground);
+  }
+
+  .toolbar-actions [data-slot="button"]:hover {
+    background: var(--secondary);
+    color: var(--foreground);
+  }
+
+  .rule-section {
+    box-shadow: 0 1px 2px rgb(27 56 64 / 3%);
+  }
+
+  .rule-section [data-slot="input"],
+  .rule-section [data-slot="command-input"],
+  .rule-section textarea {
+    background: var(--background);
+    box-shadow: none;
+  }
+
+  .rule-section [data-sortable-item]:focus-within {
+    border-radius: 0.5rem;
+  }
+
+  .diagnostics-panel summary {
+    list-style: none;
+  }
+
+  .diagnostics-panel summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .diagnostics-panel summary > h2 > i {
+    transition: transform 160ms ease;
+    transform: rotate(-90deg);
+  }
+
+  .diagnostics-panel[open] summary > h2 > i {
+    transform: rotate(0);
+  }
+
+  [data-status="registered"] {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  [data-status="registration-error"],
+  [data-status="invalid-operations"] {
+    color: var(--destructive);
+  }
+
+  [data-slot="button"] {
+    transition: color 150ms, background-color 150ms, box-shadow 150ms, transform 150ms;
+  }
+
+  [data-slot="button"]:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  [data-slot="input"]::placeholder,
+  [data-slot="command-input"]::placeholder,
+  textarea::placeholder {
+    font-style: normal;
+  }
+
+  @media (min-width: 900px) {
+    .editor-sections {
+      max-width: 76rem;
+      margin-inline: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-slot="button"],
+    .diagnostics-panel summary > h2 > i {
+      transition: none;
+    }
+  }
+}

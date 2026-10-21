@@ -1,0 +1,85 @@
+name: Release
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag, such as v1.0.0
+        required: true
+        type: string
+      publish:
+        description: Publish a new GitHub Release after checks pass
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+      commit: ${{ steps.tag.outputs.commit }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate release tag
+        id: tag
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Expected a stable version tag, such as v1.0.0"
+            exit 1
+          fi
+          COMMIT=$(git rev-parse "refs/tags/$RELEASE_TAG^{commit}")
+          git merge-base --is-ancestor "$COMMIT" origin/main
+          VERSION=$(git show "$COMMIT:extension/package.json" | node -pe 'JSON.parse(require("fs").readFileSync(0, "utf8")).version')
+          if [[ "$RELEASE_TAG" != "v$VERSION" ]]; then
+            echo "::error::Tag $RELEASE_TAG does not match extension version $VERSION"
+            exit 1
+          fi
+          echo "tag=$RELEASE_TAG" >> "$GITHUB_OUTPUT"
+          echo "commit=$COMMIT" >> "$GITHUB_OUTPUT"
+          echo "Validated $RELEASE_TAG at $COMMIT" >> "$GITHUB_STEP_SUMMARY"
+
+  checks:
+    needs: prepare
+    uses: ./.github/workflows/push-check.yml
+    with:
+      ref: ${{ needs.prepare.outputs.commit }}
+
+  publish:
+    needs: [prepare, checks]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: release-assets
+          path: release-assets
+      - name: Verify release assets
+        working-directory: release-assets
+        run: sha256sum --check SHA256SUMS.txt
+      - name: Publish GitHub Release
+        if: github.event_name == 'push' || inputs.publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+        run: |
+          gh release create "$RELEASE_TAG" release-assets/* \
+            --verify-tag --generate-notes \
+            --title "Breeze $RELEASE_TAG"

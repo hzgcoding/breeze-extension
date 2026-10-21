@@ -1,0 +1,160 @@
+/* Utilities must take precedence over VitePress's unlayered element styles. */
+@import "@breeze/ui/styles/tailwind.css" important;
+
+@source "../../**/*.{md,vue,ts}";
+
+:root {
+  --font-brand: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --brand: #117c70;
+  --foreground: #203238;
+  --primary: #117c70;
+  --primary-foreground: #fff;
+  --muted: #f3f7f6;
+  --muted-foreground: #5c6d71;
+  --ring: #117c70;
+}
+
+.dark {
+  --background: #141e23;
+  --foreground: #e8f1f1;
+  --card: #1c2b30;
+  --popover: #1c2b30;
+  --sidebar: #18262b;
+  --brand: #5bcec0;
+  --primary: #5bcec0;
+  --primary-foreground: #141e23;
+  --muted: #203238;
+  --muted-foreground: #a5b8ba;
+  --ring: #5bcec0;
+}
+
+@layer utilities {
+  /* Preserve the icon's clipping width against Tailwind's container utility. */
+  .VPNavBarHamburger .container {
+    width: 16px !important;
+  }
+}
+
+/* VitePress is an adapter for the shared theme, not a separate palette.
+   Explicitly include .dark so VitePress's dark defaults cannot override it. */
+:root,
+.dark {
+  --vp-font-family-base: var(--font-sans);
+  --vp-font-family-mono: var(--font-mono);
+
+  --vp-c-neutral: var(--foreground);
+  --vp-c-neutral-inverse: var(--background);
+  --vp-c-bg: var(--background);
+  --vp-c-bg-alt: var(--muted);
+  --vp-c-bg-elv: var(--popover);
+  --vp-c-bg-soft: var(--card);
+  --vp-c-border: var(--border);
+  --vp-c-divider: var(--border);
+  --vp-c-gutter: var(--border);
+  --vp-c-text-1: var(--foreground);
+  --vp-c-text-2: var(--muted-foreground);
+  --vp-c-text-3: var(--muted-foreground);
+
+  --vp-c-default-1: var(--accent);
+  --vp-c-default-2: var(--secondary);
+  --vp-c-default-3: var(--muted);
+  --vp-c-default-soft: color-mix(in oklch, var(--muted-foreground) 12%, transparent);
+
+  --vp-c-brand-1: var(--brand);
+  --vp-c-brand-2: color-mix(in oklch, var(--brand) 85%, var(--foreground));
+  --vp-c-brand-3: var(--brand);
+  --vp-c-brand-soft: color-mix(in oklch, var(--brand) 14%, transparent);
+  --vp-c-sponsor: var(--brand);
+  --vp-c-tip-1: var(--color-success);
+  --vp-c-tip-2: var(--color-success);
+  --vp-c-tip-3: var(--color-success);
+  --vp-c-tip-soft: color-mix(in oklch, var(--color-success) 14%, transparent);
+  --vp-c-note-1: var(--color-info);
+  --vp-c-note-2: var(--color-info);
+  --vp-c-note-3: var(--color-info);
+  --vp-c-note-soft: color-mix(in oklch, var(--color-info) 14%, transparent);
+  --vp-c-success-1: var(--color-success);
+  --vp-c-success-2: var(--color-success);
+  --vp-c-success-3: var(--color-success);
+  --vp-c-success-soft: color-mix(in oklch, var(--color-success) 14%, transparent);
+  --vp-c-important-1: var(--brand);
+  --vp-c-important-2: var(--brand);
+  --vp-c-important-3: var(--brand);
+  --vp-c-important-soft: color-mix(in oklch, var(--brand) 14%, transparent);
+  --vp-c-warning-1: var(--color-warning);
+  --vp-c-warning-2: var(--color-warning);
+  --vp-c-warning-3: var(--color-warning);
+  --vp-c-warning-soft: color-mix(in oklch, var(--color-warning) 14%, transparent);
+  --vp-c-danger-1: var(--destructive);
+  --vp-c-danger-2: var(--destructive);
+  --vp-c-danger-3: var(--destructive);
+  --vp-c-danger-soft: color-mix(in oklch, var(--destructive) 14%, transparent);
+  --vp-c-caution-1: var(--destructive);
+  --vp-c-caution-2: var(--destructive);
+  --vp-c-caution-3: var(--destructive);
+  --vp-c-caution-soft: color-mix(in oklch, var(--destructive) 14%, transparent);
+
+  /* Primary and secondary actions match the shared Button variants. */
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: var(--primary-foreground);
+  --vp-button-brand-bg: var(--primary);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: var(--primary-foreground);
+  --vp-button-brand-hover-bg: color-mix(in oklch, var(--primary) 90%, transparent);
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: var(--primary-foreground);
+  --vp-button-brand-active-bg: color-mix(in oklch, var(--primary) 80%, transparent);
+  --vp-button-alt-text: var(--secondary-foreground);
+  --vp-button-alt-bg: var(--secondary);
+  --vp-button-alt-hover-text: var(--accent-foreground);
+  --vp-button-alt-hover-bg: var(--accent);
+  --vp-button-alt-active-text: var(--accent-foreground);
+  --vp-button-alt-active-bg: var(--accent);
+
+  --vp-sidebar-bg-color: var(--sidebar);
+  --vp-input-border-color: var(--input);
+  --vp-input-bg-color: var(--background);
+  --vp-input-switch-bg-color: var(--muted);
+  --vp-code-color: var(--foreground);
+  --vp-code-bg: var(--muted);
+  --vp-code-block-bg: var(--muted);
+  --vp-custom-block-info-bg: var(--vp-c-note-soft);
+  --vp-custom-block-info-code-bg: var(--vp-c-note-soft);
+  --vp-custom-block-note-bg: var(--vp-c-note-soft);
+  --vp-custom-block-note-code-bg: var(--vp-c-note-soft);
+
+  --vp-local-search-bg: var(--popover);
+  --vp-local-search-result-bg: var(--popover);
+  --vp-local-search-result-selected-bg: var(--accent);
+  --vp-local-search-result-selected-border: var(--ring);
+  --vp-local-search-highlight-bg: var(--primary);
+  --vp-local-search-highlight-text: var(--primary-foreground);
+
+  --vp-home-hero-name-color: var(--brand);
+  --vp-home-hero-name-background: none;
+  --vp-home-hero-image-background-image: radial-gradient(
+    var(--vp-c-brand-soft), transparent 70%
+  );
+}
+
+.medium-zoom-overlay {
+  z-index: 100;
+  background-color: var(--vp-c-bg) !important;
+}
+
+.medium-zoom-image--opened {
+  z-index: 101;
+}
+
+.medium-zoom--opened .medium-zoom-overlay {
+  opacity: 0.9 !important;
+}
+
+/* The navigation wordmark has its own typeface; article typography stays shared. */
+.VPNavBarTitle .title {
+  font-family: var(--font-brand);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
