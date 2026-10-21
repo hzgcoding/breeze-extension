@@ -82,7 +82,7 @@ describe("profile group portability", { concurrent: false }, () => {
       contentType: "text/html",
     }));
     const sharePage = await extension.context.newPage();
-    await sharePage.goto(link);
+    await sharePage.goto(link.replace("/share.html#", "/share#"));
     await expect.poll(() => sharePage.url()).toContain(`chrome-extension://${extension.extensionId}/popup.html#/import`);
     await expect.poll(async () => JSON.parse(await editorText(sharePage))).toEqual(exchange);
     await sharePage.getByTestId("import-confirm").click();
