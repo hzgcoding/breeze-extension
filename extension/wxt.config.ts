@@ -17,7 +17,7 @@ export default defineConfig({
     default_locale: "en",
     description: "__MSG_extensionDescription__",
     name: "__MSG_extensionName__",
-    homepage_url: "https://github.com/hzgcoding/breeze",
+    homepage_url: "https://github.com/hzgcoding/breeze-extension",
     commands: extensionCommands,
     permissions: [
       "storage",

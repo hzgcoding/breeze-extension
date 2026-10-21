@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.0](https://github.com/hzgcoding/breeze/releases/tag/v1.0.0) (2026-10-21)
+## [1.0.0](https://github.com/hzgcoding/breeze-extension/releases/tag/v1.0.0) (2026-10-21)
 
 - Establish Breeze as an independent product with a new name, wind mark, repository, package namespace and release artifacts.
 - Redesign the request editor with teal and graphite surfaces, consistent section headers, monospace fields and light/dark themes.

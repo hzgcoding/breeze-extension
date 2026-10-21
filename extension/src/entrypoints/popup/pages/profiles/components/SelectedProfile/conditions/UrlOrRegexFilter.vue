@@ -34,12 +34,12 @@ const field = computed(() => ({
   urlFilter: {
     title: t("condition.urlFilter.title"),
     placeholder: "||example.com/*",
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/url-filter",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/url-filter",
   },
   regexFilter: {
     title: t("condition.regexFilter.title"),
     placeholder: String.raw`^https?:\/\/example\.com\/.*`,
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/regex-filter",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/regex-filter",
   },
 } as const));
 

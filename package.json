@@ -5,7 +5,7 @@
   "packageManager": "pnpm@12.4.2",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hzgcoding/breeze.git"
+    "url": "git+https://github.com/hzgcoding/breeze-extension.git"
   },
   "engines": {
     "node": ">=24.15.0"

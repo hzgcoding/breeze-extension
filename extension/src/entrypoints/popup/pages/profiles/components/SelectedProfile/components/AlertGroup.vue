@@ -66,7 +66,7 @@ const bus = useEventBus(openAddRuleOptionDialogKey);
             variant="secondary"
             as="a"
             target="_blank"
-            href="https://github.com/hzgcoding/breeze/issues"
+            href="https://github.com/hzgcoding/breeze-extension/issues"
           >
             <i class="i-lucide-github size-4" />
             {{ t("common.reportIssue") }}

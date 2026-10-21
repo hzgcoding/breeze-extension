@@ -2,7 +2,7 @@
 
 在浏览器里管理 HTTP 请求规则：修改 Header、切换联调环境、重定向、阻断与放行。
 
-[下载](https://github.com/hzgcoding/breeze/releases) · [使用文档](https://hzgcoding.github.io/breeze/) · [更新记录](./extension/CHANGELOG.md)
+[下载](https://github.com/hzgcoding/breeze-extension/releases) · [使用文档](https://hzgcoding.github.io/breeze-extension/) · [更新记录](./extension/CHANGELOG.md)
 
 ## 能力
 
@@ -25,7 +25,7 @@
 
 需要 Chrome 145 或更新版本。
 
-1. 在 [Releases](https://github.com/hzgcoding/breeze/releases) 下载 `breeze-vX.Y.Z-chrome.zip`，解压到一个固定目录。
+1. 在 [Releases](https://github.com/hzgcoding/breeze-extension/releases) 下载 `breeze-vX.Y.Z-chrome.zip`，解压到一个固定目录。
 2. 打开 `chrome://extensions`，启用「开发者模式」。
 3. 选择「加载已解压的扩展程序」，选择包含 `manifest.json` 的目录，固定 Breeze 图标。
 4. 更新时把新包覆盖到这个目录。UI 更新后重新打开弹窗；后台或 Manifest 更新后，在扩展页点击刷新，无需重新选择目录。

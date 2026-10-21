@@ -25,11 +25,11 @@ const { t } = useI18n();
 const field = computed(() => ({
   tabIds: {
     title: t("condition.tabIds.title"),
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/tabs",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/tabs",
   },
   excludedTabIds: {
     title: t("condition.excludedTabIds.title"),
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/tabs",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/tabs",
   },
 }));
 

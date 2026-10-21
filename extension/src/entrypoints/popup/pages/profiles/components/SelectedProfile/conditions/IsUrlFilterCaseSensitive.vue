@@ -32,7 +32,7 @@ const radioValue = computed({
 <template>
   <Fieldset
     :name="t('condition.urlFilterCaseSensitive.title')"
-    documentation-link="https://hzgcoding.github.io/breeze/reference/conditions/url-case-sensitivity"
+    documentation-link="https://hzgcoding.github.io/breeze-extension/reference/conditions/url-case-sensitivity"
   >
     <template #main>
       <RadioGroup v-model="radioValue" class="flex items-center gap-4">

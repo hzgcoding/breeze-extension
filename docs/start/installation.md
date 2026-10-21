@@ -4,11 +4,11 @@ order: 20
 
 # Install Breeze
 
-Breeze is distributed as a ZIP from [GitHub Releases](https://github.com/hzgcoding/breeze/releases). Use Chrome 145 or a Chromium-based browser with the same required extension APIs.
+Breeze is distributed as a ZIP from [GitHub Releases](https://github.com/hzgcoding/breeze-extension/releases). Use Chrome 145 or a Chromium-based browser with the same required extension APIs.
 
 ## Load the release ZIP
 
-1. Open [Breeze Releases](https://github.com/hzgcoding/breeze/releases) and download the Chrome extension ZIP attached to a release. The GitHub **Source code** archives are not installable extension packages.
+1. Open [Breeze Releases](https://github.com/hzgcoding/breeze-extension/releases) and download the Chrome extension ZIP attached to a release. The GitHub **Source code** archives are not installable extension packages.
 2. Extract the ZIP to a folder you can keep on your computer.
 3. Open `chrome://extensions` in Chrome and enable **Developer mode**.
 4. Choose **Load unpacked** and select the extracted directory containing `manifest.json`.

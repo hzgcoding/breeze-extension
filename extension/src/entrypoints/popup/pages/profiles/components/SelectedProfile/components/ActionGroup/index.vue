@@ -68,7 +68,7 @@ function deleteGroup() {
       <GroupActions
         v-model:list="group.items"
         v-model:type="group.type"
-        documentation-link="https://hzgcoding.github.io/breeze/reference/actions/modify-headers"
+        documentation-link="https://hzgcoding.github.io/breeze-extension/reference/actions/modify-headers"
         @delete-group="deleteGroup"
         @new-field="addNewField"
       >

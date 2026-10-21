@@ -32,27 +32,27 @@ const { t } = useI18n();
 const field = computed(() => ({
   requestDomains: {
     title: t("condition.domains.requestDomains.title"),
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/request-domains",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/request-domains",
   },
   excludedRequestDomains: {
     title: t("condition.domains.excludedRequestDomains.title"),
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/request-domains",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/request-domains",
   },
   initiatorDomains: {
     title: t("condition.domains.initiatorDomains.title"),
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/initiator-domains",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/initiator-domains",
   },
   excludedInitiatorDomains: {
     title: t("condition.domains.excludedInitiatorDomains.title"),
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/initiator-domains",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/initiator-domains",
   },
   topDomains: {
     title: t("condition.domains.topDomains.title"),
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/top-level-domains",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/top-level-domains",
   },
   excludedTopDomains: {
     title: t("condition.domains.excludedTopDomains.title"),
-    documentationLink: "https://hzgcoding.github.io/breeze/reference/conditions/top-level-domains",
+    documentationLink: "https://hzgcoding.github.io/breeze-extension/reference/conditions/top-level-domains",
   },
 }));
 

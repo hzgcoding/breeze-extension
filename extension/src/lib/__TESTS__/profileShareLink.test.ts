@@ -27,8 +27,8 @@ describe("private profile share links", () => {
   });
 
   it.each([
-    "https://hzgcoding.github.io/breeze/share/extra#profiles=YWJj",
-    "https://hzgcoding.github.io/breeze/share.other#profiles=YWJj",
+    "https://hzgcoding.github.io/breeze-extension/share/extra#profiles=YWJj",
+    "https://hzgcoding.github.io/breeze-extension/share.other#profiles=YWJj",
     `https://example.com${new URL(SHARE_PAGE_URL).pathname}#profiles=YWJj`,
     `${SHARE_PAGE_URL}/extra#profiles=YWJj`,
     `${SHARE_PAGE_URL}.other#profiles=YWJj`,

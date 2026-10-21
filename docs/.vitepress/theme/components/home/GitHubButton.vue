@@ -6,7 +6,7 @@ import { Button } from "@breeze/ui/components/button";
   <Button
     as="a"
     variant="ghost"
-    href="https://github.com/hzgcoding/breeze"
+    href="https://github.com/hzgcoding/breeze-extension"
     target="_blank"
     rel="noopener noreferrer"
     class="h-9 gap-2 rounded-lg px-2 text-sm font-medium no-underline"

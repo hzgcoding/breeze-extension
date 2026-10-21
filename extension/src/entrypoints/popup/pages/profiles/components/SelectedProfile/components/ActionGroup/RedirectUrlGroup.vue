@@ -45,7 +45,7 @@ function deleteGroup() {
     <template #group-actions>
       <GroupActions
         v-model:list="list"
-        documentation-link="https://hzgcoding.github.io/breeze/reference/actions/redirect"
+        documentation-link="https://hzgcoding.github.io/breeze-extension/reference/actions/redirect"
         @delete-group="deleteGroup"
         @new-field="addNewField"
       />

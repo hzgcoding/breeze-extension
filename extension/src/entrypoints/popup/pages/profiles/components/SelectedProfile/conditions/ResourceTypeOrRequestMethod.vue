@@ -102,8 +102,8 @@ const name = computed(() => {
 
 const documentationLink = computed(() => {
   return type === "requestMethods" || type === "excludedRequestMethods"
-    ? "https://hzgcoding.github.io/breeze/reference/conditions/request-methods"
-    : "https://hzgcoding.github.io/breeze/reference/conditions/resource-types";
+    ? "https://hzgcoding.github.io/breeze-extension/reference/conditions/request-methods"
+    : "https://hzgcoding.github.io/breeze-extension/reference/conditions/resource-types";
 });
 
 function deleteGroup() {

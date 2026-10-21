@@ -45,7 +45,7 @@ function deleteGroup() {
       <GroupActions
         v-model:list="group.items"
         v-model:type="group.type"
-        documentation-link="https://hzgcoding.github.io/breeze/reference/actions/sync-cookies"
+        documentation-link="https://hzgcoding.github.io/breeze-extension/reference/actions/sync-cookies"
         @delete-group="deleteGroup"
         @new-field="addNewField"
       />

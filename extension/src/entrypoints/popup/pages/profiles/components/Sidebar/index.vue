@@ -90,12 +90,12 @@ const ruleActionTypes = [
 
 function getRuleActionTypeDocumentationLink(type: RuleActionType) {
   return match(type)
-    .with("modifyHeaders", () => "https://hzgcoding.github.io/breeze/reference/actions/modify-headers")
-    .with("block", () => "https://hzgcoding.github.io/breeze/reference/actions/block")
-    .with("allow", () => "https://hzgcoding.github.io/breeze/reference/actions/allow")
-    .with("upgradeScheme", () => "https://hzgcoding.github.io/breeze/reference/actions/upgrade-scheme")
-    .with("allowAllRequests", () => "https://hzgcoding.github.io/breeze/reference/actions/allow-all-requests")
-    .with("redirect", () => "https://hzgcoding.github.io/breeze/reference/actions/redirect")
+    .with("modifyHeaders", () => "https://hzgcoding.github.io/breeze-extension/reference/actions/modify-headers")
+    .with("block", () => "https://hzgcoding.github.io/breeze-extension/reference/actions/block")
+    .with("allow", () => "https://hzgcoding.github.io/breeze-extension/reference/actions/allow")
+    .with("upgradeScheme", () => "https://hzgcoding.github.io/breeze-extension/reference/actions/upgrade-scheme")
+    .with("allowAllRequests", () => "https://hzgcoding.github.io/breeze-extension/reference/actions/allow-all-requests")
+    .with("redirect", () => "https://hzgcoding.github.io/breeze-extension/reference/actions/redirect")
     .exhaustive();
 }
 </script>
@@ -212,19 +212,19 @@ function getRuleActionTypeDocumentationLink(type: RuleActionType) {
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuItem as-child>
-                <a href="https://hzgcoding.github.io/breeze/start/overview" target="_blank">
+                <a href="https://hzgcoding.github.io/breeze-extension/start/overview" target="_blank">
                   <i class="i-lucide-book-open size-4 shrink-0" />
                   {{ t("profile.sidebar.documentation") }}
                 </a>
               </DropdownMenuItem>
               <DropdownMenuItem as-child>
-                <a href="https://github.com/hzgcoding/breeze" target="_blank">
+                <a href="https://github.com/hzgcoding/breeze-extension" target="_blank">
                   <i class="i-lucide-github size-4 shrink-0" />
                   {{ t("common.github") }}
                 </a>
               </DropdownMenuItem>
               <DropdownMenuItem as-child>
-                <a href="https://github.com/hzgcoding/breeze/blob/main/extension/CHANGELOG.md" target="_blank">
+                <a href="https://github.com/hzgcoding/breeze-extension/blob/main/extension/CHANGELOG.md" target="_blank">
                   <i class="i-lucide-scroll-text size-4 shrink-0" />
                   {{ t("profile.sidebar.changelog") }}
                 </a>

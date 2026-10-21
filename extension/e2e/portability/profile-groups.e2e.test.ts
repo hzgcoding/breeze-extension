@@ -77,7 +77,7 @@ describe("profile group portability", { concurrent: false }, () => {
     await expect.poll(() => exportPage.evaluate(() => window.e2eClipboard)).toContain(`${SHARE_PAGE_URL}#profiles=`);
     const link = await exportPage.evaluate(() => window.e2eClipboard);
     await exportPage.close();
-    await extension.context.route("https://hzgcoding.github.io/breeze/share*", async route => route.fulfill({
+    await extension.context.route("https://hzgcoding.github.io/breeze-extension/share*", async route => route.fulfill({
       body: "<!doctype html><title>Breeze share</title>",
       contentType: "text/html",
     }));

@@ -7,8 +7,8 @@ import llmstxt from "vitepress-plugin-llms";
 import extensionPackage from "../../extension/package.json" with { type: "json" };
 import { generateDocsSidebar } from "./sidebar.ts";
 
-const base = process.env.DOCS_BASE || (process.env.NODE_ENV === "production" ? "/breeze/" : "/");
-const siteUrl = "https://hzgcoding.github.io/breeze/";
+const base = process.env.DOCS_BASE || (process.env.NODE_ENV === "production" ? "/breeze-extension/" : "/");
+const siteUrl = "https://hzgcoding.github.io/breeze-extension/";
 
 export default defineConfig({
   base,
@@ -40,7 +40,7 @@ export default defineConfig({
   ],
   themeConfig: {
     editLink: {
-      pattern: "https://github.com/hzgcoding/breeze/edit/main/docs/:path",
+      pattern: "https://github.com/hzgcoding/breeze-extension/edit/main/docs/:path",
       text: "Edit this page on GitHub",
     },
     nav: [
@@ -54,11 +54,11 @@ export default defineConfig({
           items: [
             {
               text: "Releases",
-              link: "https://github.com/hzgcoding/breeze/releases",
+              link: "https://github.com/hzgcoding/breeze-extension/releases",
             },
             {
               text: "Contributing",
-              link: "https://github.com/hzgcoding/breeze/blob/main/.github/CONTRIBUTING.md",
+              link: "https://github.com/hzgcoding/breeze-extension/blob/main/.github/CONTRIBUTING.md",
             },
           ],
         },
@@ -66,7 +66,7 @@ export default defineConfig({
     ],
     sidebar: generateDocsSidebar(),
     socialLinks: [
-      { icon: "github", link: "https://github.com/hzgcoding/breeze" },
+      { icon: "github", link: "https://github.com/hzgcoding/breeze-extension" },
     ],
     search: {
       provider: "local",

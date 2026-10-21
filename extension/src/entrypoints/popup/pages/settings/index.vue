@@ -122,7 +122,7 @@ const settings = useCreateSettings();
               <InfoTooltip :description="t('settings.troubleshooting.reinitializeDescription')" />
             </Button>
             <Button as-child>
-              <a target="_blank" href="https://github.com/hzgcoding/breeze/issues/new?template=BUG_REPORT.yml">
+              <a target="_blank" href="https://github.com/hzgcoding/breeze-extension/issues/new?template=BUG_REPORT.yml">
                 <i class="i-lucide-github" />
                 {{ t("common.reportIssue") }}
               </a>

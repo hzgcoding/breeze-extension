@@ -30,7 +30,7 @@ See [Import, export, and share](/guides/import-export-share) for the default red
 
 ## Documentation website
 
-The documentation is hosted at [hzgcoding.github.io/breeze](https://hzgcoding.github.io/breeze/) on GitHub Pages. Fonts and search assets are bundled with the site; documentation search runs locally without an external search provider. The site does not include analytics.
+The documentation is hosted at [hzgcoding.github.io/breeze](https://hzgcoding.github.io/breeze-extension/) on GitHub Pages. Fonts and search assets are bundled with the site; documentation search runs locally without an external search provider. The site does not include analytics.
 
 Your browser still connects to GitHub Pages to load the site and to GitHub when you follow source or release links. Those services receive ordinary web requests. A shared link's fragment is not included in the HTTP request to the documentation host.
 
